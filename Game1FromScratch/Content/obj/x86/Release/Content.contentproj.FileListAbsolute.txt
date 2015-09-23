@@ -1,0 +1,1 @@
+C:\Users\Tom\Documents\Programing Projects\0_XNA\Game1FromScratch\Game1FromScratch\Content\obj\x86\Release\ResolveAssemblyReference.cache
