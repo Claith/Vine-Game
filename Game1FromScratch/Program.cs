@@ -1,19 +1,19 @@
 using System;
 
-namespace Game1FromScratch
+namespace Infection
 {
-    static class Program
+  static class Program
+  {
+    /// <summary>
+    /// The main entry point for the application.
+    /// </summary>
+    static void Main(string[] args)
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        static void Main(string[] args)
-        {
-            using (Game1 game = new Game1())
-            {
-                game.Run();
-            }
-        }
+      using (Live game = new Live())
+      {
+          game.Run();
+      }
     }
+  }
 }
 

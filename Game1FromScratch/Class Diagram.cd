@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Infection.Sprite">
+    <Position X="0.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>SAUAAICIDIBBggSAAQaAIAADUAAAAxCVAABQBBAAAAE=</HashCode>
+      <FileName>Sprite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Infection.SpriteList">
+    <Position X="2.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAgAACAAAAgAAAAwAAAAAgAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>SpriteList.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Infection.Live" Collapsed="true">
+    <Position X="0.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>xC4YkO4pQpRkl2dDgCIKCEBhMANCoSilY0Og5ykY64Q=</HashCode>
+      <FileName>Core.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Infection.Vine">
+    <Position X="6.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQQAAAHCAAAAgAAAAIAAACBCAIAIhCAASAABAAEAAA=</HashCode>
+      <FileName>Vine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Infection.Wall">
+    <Position X="2.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAUQAAAAGAAAAgAABIAAAAEAAAAAIBCAASAAABAAIAA=</HashCode>
+      <FileName>Wall.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Infection.Cursor">
+    <Position X="4.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAACAAAAAAAAAQAAAAAAAAAAAAAACAAABAAAAg=</HashCode>
+      <FileName>Cursor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Infection.Bomb">
+    <Position X="4.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQABCAACIAAAgAAAAIAAAAAAAAgQAAQAAAAAAAACAA=</HashCode>
+      <FileName>Bomb.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Infection.Bubble" Collapsed="true">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQABCAACIAAAgAAAAAAAAAAAAAgQAAQAAAAAAAACAA=</HashCode>
+      <FileName>Bubble.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

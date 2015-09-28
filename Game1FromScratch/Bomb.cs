@@ -12,10 +12,12 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 
-namespace Game1FromScratch
+namespace Infection
 {
-  class Bomb : CollisionSprite
+  class Bomb : Sprite
   {
+    private static int inPlay = 0;
+
     public const int STATE_NOT_READY = 0;
     public const int STATE_READY = 1;
     public const int STATE_FALLING = 2;
@@ -23,27 +25,48 @@ namespace Game1FromScratch
 
     public override void Setup()
     {
-      Image = Game1.imageArray[0];
-      texture = Game1.colorArray[0];
+      base.Setup();
 
-      //bool found;
+			SetType(COLLISION_SPRITE);
 
-      Stamina = 5;
-      Damage = 4;
+      int temp = Live.rand.Next(Live.BombImageIndex, Live.BombImageIndex + Live.BombImageIndexDepth);
 
-      position.X = Game1.screenWidth * Game1.randFloat();
-        //Cheap way //Game1.randBoundedFloat(((Wall)Game1.leftWallList.getNext(Wall.WALL_TOP, out found)).rightWall(), ((Wall)Game1.rightWallList.getNext(Wall.WALL_TOP, out found)).leftWall());
-      position.Y = -Image.Height;//Game1.screenHeight + Image.Height;
+      Image = Live.imageArray[temp];
+      texture = Live.colorArray[temp];
+
+      switch (temp)
+      {
+        case 0:
+					SetStatus(2, 4);
+          break;
+        case 1:
+					SetStatus(5, 10);
+          break;
+        case 2:
+					SetStatus(15, 2);
+          break;
+        case 3:
+					SetStatus(7, 7);
+          break;
+        case 4:
+					SetStatus(3, 1);
+          break;
+      }
+
+      //position.X = Live.randBoundedFloat(((Wall)Live.leftWallList.getNext()).rightWall() + 15f, ((Wall)Live.rightWallList.getNext()).leftWall() - 15f); //Live.screenWidth * Live.randFloat();
+      position.X = Live.randBoundedFloat(Live.leftBorder, Live.rightBorder);
+        //Cheap way //Live.randBoundedFloat(((Wall)Live.leftWallList.getNext(Wall.WALL_TOP, out found)).rightWall(), ((Wall)Live.rightWallList.getNext(Wall.WALL_TOP, out found)).leftWall());
+      position.Y = -Image.Height;//Live.screenHeight + Image.Height;
 
       oldPosition = position;
 
-      speed.X = 120.0f * (Game1.randFloat() - 0.5f);
-      speed.Y = 60.0f * Game1.randFloat();
+      speed.X = 120.0f * (Live.randFloat() - 0.5f);
+      speed.Y = 60.0f * Live.randFloat();
 
       scaledGrowth = Vector2.One;
 
-      rotation = MathHelper.TwoPi * (float)Game1.rand.NextDouble();
-      rotationSpeed = ((float)Game1.rand.NextDouble() - 0.5f) * MathHelper.TwoPi;
+      rotation = MathHelper.TwoPi * (float)Live.rand.NextDouble();
+      rotationSpeed = ((float)Live.rand.NextDouble() - 0.5f) * MathHelper.TwoPi;
 
       rotationCenter = new Vector2(Image.Width / 2, Image.Height / 2);
 
@@ -52,8 +75,6 @@ namespace Game1FromScratch
 
     public override void Update(GameTime gameTime)
     {
-      base.Update(gameTime);
-
       switch (state)
       {
         case STATE_NOT_READY:
@@ -70,6 +91,8 @@ namespace Game1FromScratch
           if (stateTime > 200) changeState(STATE_FALLING);
           break;
       }
+      
+      base.Update(gameTime);
     }
 
     private void Update_STATE_NOT_READY()
@@ -84,61 +107,63 @@ namespace Game1FromScratch
 
     private void Update_STATE_READY()
     {
-      //chance to spawn
-      if (Game1.randFloat() < (Game1.BombRate * Game1.Difficulty))
+      if (inPlay < Live.Difficulty * 2)
       {
-        changeState(STATE_FALLING);
+        if (Live.randFloat() < (Live.BombRate * Live.Difficulty))
+        {
+          changeState(STATE_FALLING);
+          inPlay++;
+        }
       }
     }
 
     private void Update_STATE_FALLING(GameTime gameTime)
     {
-      float gravity = 160.0f;
-
-      speed.Y += gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+      speed.Y += Math.Abs(Live.gravity * (float)gameTime.ElapsedGameTime.TotalSeconds);
       rotation += rotationSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
       oldPosition = position;
       position += speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
       //Collision Detection here
-
-      if ((position.X + personalSpace.Width) > Game1.screenWidth)
-      {
-        position.X = Game1.screenWidth - personalSpace.Width;
-        speed.X = -Speed.X;
-      }
-      if ((position.X) < 0)
-      {
-        position.X = 0f;//Game1.screenWidth;
-        speed.X = -Speed.X;
-      }
-
       if (state != STATE_HIT)
       {
         //check against walls better (angled walls) later though
-        /*{
+        {
           Wall w;
-          for (int i = 0; i < Game1.WallCount; i++)//Sprite w in Game1.leftWallList)
+          for (int i = 0; i < Live.WallCount; i++)//Sprite w in Live.leftWallList)
           {
-            w = (Wall)Game1.leftWallList.getNext();
-            if (w.Collision(personalSpace, transformation, Image, texture)) { Hit(w); }
+            if (state == STATE_HIT) break;
+            w = (Wall)Live.leftWallList.getNext();
+            if (w.Collision(personalSpace, transformation, Image, texture))
+            {
+              //position.X = ((Wall)Live.leftWallList.getNext()).rightWall() + (position.X - oldPosition.X);
+              speed.X = Math.Abs(speed.X + Live.randFloat());
+              //changeState(STATE_HIT);
+            }
           }
-          for (int i = 0; i < Game1.WallCount; i++)//Sprite w in Game1.leftWallList)
+          for (int i = 0; i < Live.WallCount; i++)//Sprite w in Live.rightWallList)
           {
-            w = (Wall)Game1.rightWallList.getNext();
-            if (w.Collision(personalSpace, transformation, Image, texture)) { Hit(w); }
+            if (state == STATE_HIT) break;
+            w = (Wall)Live.rightWallList.getNext();
+            if (w.Collision(personalSpace, transformation, Image, texture))
+            {
+              //position.X = ((Wall)Live.rightWallList.getNext()).leftWall() + (position.X - oldPosition.X);//- personalSpace.Width; 
+              speed.X = -1 * Math.Abs(speed.X + Live.randFloat());
+              //changeState(STATE_HIT);
+            }
           }
-        }*/
+        }
 
         //check against each vine
         {
           Vine v;
 
-          for (int i = 0; i < Game1.VineCount; i++)
+          for (int i = 0; i < Live.VineCount; i++)
           {
+            if (state == STATE_HIT) break;
             //need to add state checking to the class's collision detection
-            v = (Vine)Game1.vineList.getNext();
+            v = (Vine)Live.vineList.getNext();
             if ((v.state == Vine.VINE_GROWN) || (v.state == Vine.VINE_GROWING))
               if (v.Collision(personalSpace, transformation, Image, texture))
               {
@@ -150,49 +175,50 @@ namespace Game1FromScratch
         //check against each tendril
       }
 
-      //If bomb reaches bottom/base
-      if (position.Y > Game1.screenHeight)//((Wall)Game1.leftWallList.getNext(Wall.WALL_SHOWN, out found)).personalSpace.Bottom)
+      //Check Walls -- remove position changes.
+      if (personalSpace.Left < 0)
       {
-        Game1.baseHit(stamina, damage);
+        position.X = Live.leftBorder; //((Wall)Live.leftWallList.getNext()).rightWall();//0f;//Live.screenWidth;
+        //speed.X = -Speed.X;
+        speed.X = Math.Abs(speed.X);// + Live.randFloat());
+        //changeState(STATE_HIT);
+      }
+      if (personalSpace.Right > Live.screenWidth)
+      {
+        position.X = Live.rightBorder - personalSpace.Width; //((Wall)Live.rightWallList.getNext()).leftWall() - personalSpace.Width;//Live.screenWidth - personalSpace.Width;
+        //speed.X = -Speed.X;
+        speed.X = -1 * Math.Abs(speed.X);// + Live.randFloat());
+        //changeState(STATE_HIT);
+      }
+
+      //If bomb reaches bottom/base
+      if (personalSpace.Top > Live.screenHeight)//((Wall)Live.leftWallList.getNext(Wall.WALL_SHOWN, out found)).personalSpace.Bottom)
+      {
+        Live.baseHit(stamina, damage);
         changeState(STATE_NOT_READY);
       }
     }
 
-    public override void Hit(CollisionSprite v)
+    public override void Hit(Sprite v)
     {
       //base.Hit(v);
 
       v.Hit(this);
 
-      Game1.score += (uint)(10 * Game1.Difficulty);
+      Live.score += (uint)(10 * Live.Difficulty);
 
-      Vector2 normal = Vector2.One;
-      //Vector2 temp = Vector2.Zero;
-      //float tempRotation = 0.0f;
+      if (stamina <= 0)
+      {
+        changeState(STATE_NOT_READY);
+        inPlay--;
+      }
+      else
+      {
+        speed.X += Live.randBoundedFloat(-60f, 60f);
+        speed.Y = Live.randBoundedFloat(-120f, -360f);
 
-      if (stamina <= 0) { changeState(STATE_NOT_READY); }
-
-      //calculate reflection here
-      //A lame attempt to decide which side to bounce off of. Will need to look into this.
-      //if (v.personalSpace.Top < v.personalSpace.Bottom)//((v.personalSpace.Center.Y - personalSpace.Center.Y) >= (v.personalSpace.Center.X - personalSpace.Center.X))
-      //{
-      //  normal = new Vector2((v.personalSpace.Height), -(v.personalSpace.Width));
-      //  //tempRotation = MathHelper.Pi + (float)Math.Atan2((double)(personalSpace.Height), (double)(personalSpace.Width));
-      //}
-      //else
-      //{
-      //  normal = new Vector2(-(v.personalSpace.Height), (v.personalSpace.Width));
-      //}
-      //normal = Vector2.Reflect(position - oldPosition, normal);
-      //normal.Normalize();
-      //temp.X = (float)(normal.Length() / normal.X);
-      //temp.Y = (float)(normal.Length() / normal.Y);
-
-      //normal.X = Speed.Length() * temp.X * 0.25f;
-      //normal.Y = Speed.Length() * temp.Y * 0.25f;
-      normal = Speed;
-      speed.X = MathHelper.Clamp((normal.Y + (Game1.randFloat() - 0.5f)) * -2.25f, -80f, 80f);
-      speed.Y = MathHelper.Clamp((normal.Y * Game1.randFloat()) * -1.25f, -400.0f, 0f);
+        changeState(STATE_HIT);
+      }
     }
 
     public override void Draw(SpriteBatch sb)
@@ -204,6 +230,7 @@ namespace Game1FromScratch
           break;
         case STATE_FALLING:
         case STATE_HIT:
+          //sb.Draw(image, position, null, color, rotation, rotationCenter, scale, SpriteEffects.None, zOrder);
           base.Draw(sb);
           break;
       }

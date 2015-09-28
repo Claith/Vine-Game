@@ -7,8 +7,8 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Game1FromScratch</RootNamespace>
-    <AssemblyName>Game1FromScratch</AssemblyName>
+    <RootNamespace>Infection</RootNamespace>
+    <AssemblyName>Infection</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
     <XnaPlatform>Windows</XnaPlatform>
@@ -36,8 +36,11 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
+    <TargetCulture>en-US</TargetCulture>
+    <ProductName>Infection</ProductName>
+    <DisallowUrlActivation>true</DisallowUrlActivation>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <ApplicationVersion>0.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -118,11 +121,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bomb.cs" />
-    <Compile Include="CollisionSprite.cs" />
+    <Compile Include="Bubble.cs" />
     <Compile Include="Cursor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Game1.cs" />
+    <Compile Include="Core.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="SpriteList.cs" />
     <Compile Include="Vine.cs" />
@@ -179,6 +182,9 @@
       <ProductName>Microsoft XNA Framework Redistributable 4.0</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Class Diagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Content\Game1FromScratchContent.contentproj">
