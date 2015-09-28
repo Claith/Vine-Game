@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game1FromScratch", "Game1FromScratch\Game1FromScratch.csproj", "{F380FB9E-56A1-4ACB-B796-5B409B9785B8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infection", "Game1FromScratch\Infection.csproj", "{F380FB9E-56A1-4ACB-B796-5B409B9785B8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game1FromScratchContent", "Game1FromScratch\Content\Game1FromScratchContent.contentproj", "{6A50F4A5-5239-4B41-A507-4C535A69E1D1}"
 EndProject

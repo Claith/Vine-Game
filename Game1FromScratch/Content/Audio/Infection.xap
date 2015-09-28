@@ -11,13 +11,13 @@ Options
 
 Global Settings
 {
-    Xbox File = Xbox\Sounds.xgs;
-    Windows File = Win\Sounds.xgs;
-    Header File = Sounds.h;
+    Xbox File = Xbox\Infection.xgs;
+    Windows File = Win\Infection.xgs;
+    Header File = Infection.h;
     Exclude Category Names = 0;
     Exclude Variable Names = 0;
-    Last Modified Low = 3041891004;
-    Last Modified High = 30026412;
+    Last Modified Low = 1741556620;
+    Last Modified High = 30059530;
 
     Category
     {
@@ -227,54 +227,54 @@ Wave Bank
     Compression Preset Name = <none>;
     Xbox Bank Last Modified Low = 0;
     Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 3041941004;
-    PC Bank Last Modified High = 30026412;
-    Bank Last Revised Low = 2004338300;
-    Bank Last Revised High = 30026411;
+    PC Bank Last Modified Low = 1741556620;
+    PC Bank Last Modified High = 30059530;
+    Bank Last Revised Low = 433587870;
+    Bank Last Revised High = 30059530;
 
     Wave
     {
-        Name = pipebang;
-        File = pipebang.wav;
-        Build Settings Last Modified Low = 763978300;
-        Build Settings Last Modified High = 30026411;
+        Name = coreHitSudden;
+        File = C:\Documents and Settings\Administrator\Desktop\FINAL_CAP4028_CSMITH49\Game1FromScratch\Content\coreHitSudden.wav;
+        Build Settings Last Modified Low = 3805898916;
+        Build Settings Last Modified High = 30059529;
 
         Cache
         {
             Format Tag = 0;
-            Channels = 1;
-            Sampling Rate = 8000;
-            Bits Per Sample = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
             Play Region Offset = 44;
-            Play Region Length = 2226;
+            Play Region Length = 970740;
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 2613386496;
-            Last Modified High = 29942924;
+            Last Modified Low = 2118344192;
+            Last Modified High = 30044898;
         }
     }
 
     Wave
     {
-        Name = implosion2;
-        File = implosion2.wav;
-        Build Settings Last Modified Low = 1252638300;
-        Build Settings Last Modified High = 30026411;
+        Name = lowThump;
+        File = C:\Documents and Settings\Administrator\Desktop\FINAL_CAP4028_CSMITH49\Game1FromScratch\Content\lowThump.wav;
+        Build Settings Last Modified Low = 3806055166;
+        Build Settings Last Modified High = 30059529;
 
         Cache
         {
             Format Tag = 0;
             Channels = 1;
-            Sampling Rate = 8000;
-            Bits Per Sample = 0;
+            Sampling Rate = 22050;
+            Bits Per Sample = 1;
             Play Region Offset = 44;
-            Play Region Length = 23057;
+            Play Region Length = 159172;
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 4053386496;
-            Last Modified High = 29942924;
+            Last Modified Low = 629934848;
+            Last Modified High = 30043112;
         }
     }
 }
@@ -286,14 +286,14 @@ Sound Bank
     Windows File = Win\Sound Bank.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
-    Bank Last Modified Low = 3042041004;
-    Bank Last Modified High = 30026412;
+    Bank Last Modified Low = 1742181620;
+    Bank Last Modified High = 30059530;
     Header Last Modified High = 0;
     Header Last Modified Low = 0;
 
     Sound
     {
-        Name = pipebang;
+        Name = lowThump;
         Volume = -1200;
         Pitch = 0;
         Priority = 0;
@@ -329,54 +329,7 @@ Sound Bank
                 {
                     Bank Name = Wave Bank;
                     Bank Index = 0;
-                    Entry Name = pipebang;
-                    Entry Index = 0;
-                    Weight = 255;
-                    Weight Min = 0;
-                }
-            }
-        }
-    }
-
-    Sound
-    {
-        Name = implosion2;
-        Volume = -1200;
-        Pitch = 0;
-        Priority = 0;
-
-        Category Entry
-        {
-            Name = Default;
-        }
-
-        Track
-        {
-            Volume = 0;
-            Use Filter = 0;
-
-            Play Wave Event
-            {
-                Break Loop = 0;
-                Use Speaker Position = 0;
-                Use Center Speaker = 1;
-                New Speaker Position On Loop = 1;
-                Speaker Position Angle = 0.000000;
-                Speaer Position Arc = 0.000000;
-
-                Event Header
-                {
-                    Timestamp = 0;
-                    Relative = 0;
-                    Random Recurrence = 0;
-                    Random Offset = 0;
-                }
-
-                Wave Entry
-                {
-                    Bank Name = Wave Bank;
-                    Bank Index = 0;
-                    Entry Name = implosion2;
+                    Entry Name = lowThump;
                     Entry Index = 1;
                     Weight = 255;
                     Weight Min = 0;
@@ -385,9 +338,56 @@ Sound Bank
         }
     }
 
+    Sound
+    {
+        Name = coreHitSudden;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaer Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = coreHitSudden;
+                    Entry Index = 0;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
     Cue
     {
-        Name = pipebang;
+        Name = lowThump;
 
         Variation
         {
@@ -398,7 +398,7 @@ Sound Bank
 
         Sound Entry
         {
-            Name = pipebang;
+            Name = lowThump;
             Index = 0;
             Weight Min = 0;
             Weight Max = 255;
@@ -407,7 +407,7 @@ Sound Bank
 
     Cue
     {
-        Name = implosion2;
+        Name = coreHitSudden;
 
         Variation
         {
@@ -418,7 +418,7 @@ Sound Bank
 
         Sound Entry
         {
-            Name = implosion2;
+            Name = coreHitSudden;
             Index = 1;
             Weight Min = 0;
             Weight Max = 255;

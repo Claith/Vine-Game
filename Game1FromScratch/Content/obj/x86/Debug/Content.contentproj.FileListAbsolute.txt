@@ -1,3 +1,6 @@
 C:\Users\Tom\Documents\Programing Projects\0_XNA\Game1FromScratch\Game1FromScratch\Content\obj\x86\Debug\ResolveAssemblyReference.cache
 C:\Users\Tom\Documents\Programing Projects\0_XNA\090914b Minor improvements\Game1FromScratch\Content\obj\x86\Debug\ResolveAssemblyReference.cache
 C:\Documents and Settings\Deject\My Documents\Projects\090925b-Paddle-Hitting-Balls\090925b Paddle Hitting Balls\Game1FromScratch\Content\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Deject\My Documents\Projects\Prototype 01\Game1FromScratch\Content\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Administrator\Desktop\FINAL_CAP4028_CSMITH49\Game1FromScratch\Content\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Administrator\Desktop\FINAL_CAP4028_CSMITH49\Game1FromScratch\Content\obj\x86\Debug\Audio\Infection.xml

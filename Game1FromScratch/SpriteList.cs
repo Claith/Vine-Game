@@ -1,6 +1,6 @@
 ﻿//************************************************************
 //
-// (c) Copyright 2009 Christopher Smith
+// (c) Copyright 2009 Dr. Thomas Fernandez
 //
 //  All rights reserved.
 //
@@ -21,7 +21,7 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 
-namespace Game1FromScratch
+namespace Infection
 {
   public class SpriteList : Sprite
   {
@@ -88,6 +88,7 @@ namespace Game1FromScratch
 
     public override void Draw(SpriteBatch sb)
     {
+      //if(array.Length == 0) base.Draw(sb);
       foreach (Sprite s in array) { s.Draw(sb); }
     }
   }

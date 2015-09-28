@@ -12,15 +12,20 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 
-namespace Game1FromScratch
+namespace Infection
 {
   //This is just the vine type and not the Tendril
-  class Vine : CollisionSprite
+  class Vine : Sprite
   {
+    protected int vineType = VINE_BASE;
+    public int VineType
+    {
+      get { return vineType; }
+      set { vineType = value; }
+    }
+
     //how far it has grown so far
     protected Vector2 currentGrowth = Vector2.Zero;
-
-    //protected Vector2 scaledGrowth = Vector2.Zero;
 
     protected float growthPercent = 0.0f;
     protected float growthRate = 0.0f;
@@ -29,21 +34,34 @@ namespace Game1FromScratch
       set { growthRate = value; }
     }
 
+    protected TimeSpan growDelay = TimeSpan.FromMilliseconds(250f);
+    public TimeSpan GrowDelay
+    {
+      set { growDelay = value; }
+    }
+
     //constants
     public const int VINE_DEAD = 0;
     public const int VINE_SETUP = 1;
     public const int VINE_GROWING = 2;
     public const int VINE_GROWN = 3;
 
+    public const int VINE_BASE = 0;
+    public const int VINE_TOP = 1;
+    public const int VINE_DETAIL = 2;
+
     public override void Setup()
     {
       base.Setup();
 
-      Image = Game1.imageArray[1];
-      texture = Game1.colorArray[1];
+			SetType(COLLISION_SPRITE);
 
-      stamina = 10;
-      Damage = 4;
+      int temp = Live.rand.Next(Live.VineImageIndex, Live.VineImageIndex + Live.VineImageIndexDepth);
+
+      Image = Live.imageArray[temp];
+      texture = Live.colorArray[temp];
+
+			SetStatus(15, 2);
 
       currentGrowth = Vector2.Zero;
 
@@ -51,7 +69,7 @@ namespace Game1FromScratch
 
       scaledGrowth = Vector2.One;
       growthPercent = 0.0f;
-      growthRate = 15.0f;
+      growthRate = 5.0f;
 
       state = VINE_DEAD;
     }
@@ -79,7 +97,7 @@ namespace Game1FromScratch
         //check collision with nearby walls
         //check from then to, then check nearby for interceptions.
 
-        scale = Vector2.Distance(oldPosition, position) / Image.Width; //Math.Abs(oldPosition.X - position.X) / Image.Width);
+        scale = Vector2.Distance(oldPosition, position) / Image.Width;
 
         //find rotation
         rotation = MathHelper.Pi + (float)Math.Atan2((double)(position.Y - oldPosition.Y), (double)(position.X - oldPosition.X));
@@ -95,35 +113,46 @@ namespace Game1FromScratch
 
     private void checkGrowth(GameTime gameTime)
     {
-      //If the vine is growing
-      if(state == VINE_GROWING)
+      switch (state)
       {
-        //setback to unit vector
-        currentGrowth.Normalize();
+        case VINE_DEAD:
+        case VINE_SETUP:
+          break;
+        case VINE_GROWING:
+          //If the vine is growing
+          //setback to unit vector
+          currentGrowth.Normalize();
 
-        growthPercent += growthRate * (float)gameTime.ElapsedGameTime.TotalSeconds;
+          growthPercent += growthRate * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-        if (growthPercent >= 1.0f) //when fully grown
-        {
-          growthPercent = 1.0f;
-          state = VINE_GROWN;
-          Game1.vineMake.Play();
-        }
+          if (growthPercent >= 1.0f) //when fully grown
+          {
+            growthPercent = 1.0f;
+            state = VINE_GROWN;
+            Live.vineMake.Play();
+          }
 
-        //set growth length
-        currentGrowth.X = ( oldPosition.X - position.X ) * growthPercent;
-        currentGrowth.Y = ( oldPosition.Y - position.Y ) * growthPercent;
+          //set growth length
+          currentGrowth.X = (oldPosition.X - position.X) * growthPercent;
+          currentGrowth.Y = (oldPosition.Y - position.Y) * growthPercent;
+          break;
+        case VINE_GROWN:
+
+          //set growth length
+          currentGrowth.X = (oldPosition.X - position.X) * growthPercent;
+          currentGrowth.Y = (oldPosition.Y - position.Y) * growthPercent;
+          break;
       }
     }
 
     public override void Draw(SpriteBatch sb)
     {
-      //base.Draw(sb);
       if( state != VINE_DEAD )
         sb.Draw(Image, position, null, color, rotation, rotationCenter, scaledGrowth, SpriteEffects.None, zOrder);
+      //base.Draw(sb);
     }
 
-    public override void Hit(CollisionSprite s)
+    public override void Hit(Sprite s)
     {
       base.Hit(s);
 
@@ -131,30 +160,12 @@ namespace Game1FromScratch
       {
         stamina = 0;
         state = VINE_DEAD;
-        Game1.vineDestroy.Play();
+        Live.vineDestroy.Play();
+      }
+      else
+      {
+        Live.vineHit.Play();
       }
     }
-
-    /*public override void Collision(Vector2 oldPosition, Vector2 newPosition, Vector2 imgBound)
-    {
-      //idea #1
-      //check the distance between old and new positions to height and width of this.bounds
-      //if distance <= img bounds, then check for overlap?
-      //detect from which side the collion came from, by comparing xs and ys
-      //reflect off the normal?
-
-
-      //check for hit with passed information
-      //check for if it is nearby
-      float distance = Vector2.Distance(newPosition, position);
-
-      if (distance <= imgBound.Length)
-      {
-        //close to impact
-      }
-      //check for an intersection
-
-      //bounce back
-    }*/
   }
 }
